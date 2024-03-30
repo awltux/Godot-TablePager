@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqw776t7465xv"]
+
+[ext_resource type="Script" path="res://Components/TablePager/Examples/TablePagerExample.gd" id="1_qp5sq"]
+[ext_resource type="PackedScene" uid="uid://brcgdlt72ia6w" path="res://Components/TablePager/TablePager.tscn" id="2_0n32f"]
+
+[node name="TablePagerExample" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_qp5sq")
+
+[node name="TablePager" parent="." instance=ExtResource("2_0n32f")]
+layout_mode = 1
+anchors_preset = 10
+anchor_bottom = 0.0
+offset_bottom = 36.0
+grow_vertical = 1

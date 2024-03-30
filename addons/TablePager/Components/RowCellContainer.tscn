@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw4s341rvn6eg"]
+
+[ext_resource type="Script" path="res://Components/TablePager/Components/RowCellContainer.gd" id="1_2t0k0"]
+
+[node name="RowCellContainer" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_2t0k0")

@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3qbjo20mbgtt"]
+
+[ext_resource type="Script" path="res://Components/TablePager/Components/CellSliderUpdate.gd" id="1_cq6r7"]
+
+[node name="CellSliderUpdate" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_cq6r7")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+flat = true
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
