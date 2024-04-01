@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dp1xkbl270fsv"]
+
+[ext_resource type="FontFile" uid="uid://b0wrgpx8k4yc3" path="res://addons/TablePager/Themes/Guifx v2 Transports.ttf" id="1_xeffi"]
+
+[resource]
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_xeffi")

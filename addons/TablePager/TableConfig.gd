@@ -32,7 +32,7 @@ func _init(
 	skipSize = _skipSize
 	widthChangedSignal = _widthChangedSignal
 	columnSortSignal = _columnSortSignal
-	
+
 func GetSortColumn() -> String:
 	# TODO: if empty return default
 	return _defaultSortColumn

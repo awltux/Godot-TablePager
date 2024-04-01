@@ -45,7 +45,8 @@ const COLUMN_WIDTH_FIXED: String = "column_width_fixed"
 # This tells the header to not shrink any further than the column cell
 const COLUMN_WIDTH_PX: String = "column_width_px"
 
-
+const DEFAULT_WIDTH_PX: int = -1
+const DEFAULT_FIXED_WIDTH: bool = false
 
 # Used a default, but can be overridden.
 var headerPackedScene: PackedScene
@@ -74,6 +75,9 @@ var widthChangedSignal: Signal
 
 var columnSortSignal: Signal
 
+var customMinimumSize: int = DEFAULT_WIDTH_PX
+var expandHorizontal: bool = DEFAULT_FIXED_WIDTH
+
 # Optional: Each cell component defines a set of valid entries
 # Common keys are defined as constants in this file.
 # CellType specific keys will be defined in the Cell script itself.
@@ -84,7 +88,7 @@ func _init(	_headerPackedScene: PackedScene,
 			_columnName: String, 
 			_rowIndexName: String):
 
-	headerPackedScene = _headerPackedScene 
+	headerPackedScene = _headerPackedScene
 	cellPackedScene = _cellPackedScene
 	columnName = _columnName 
 	rowIndexName = _rowIndexName

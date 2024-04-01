@@ -1,10 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c54mqbblswwks"]
+[gd_scene load_steps=2 format=3 uid="uid://c54mqbblswwks"]
 
-[ext_resource type="Script" path="res://Components/TablePager/Components/CellHeader.gd" id="1_ylotp"]
-[ext_resource type="FontFile" uid="uid://bhl0qk16d4men" path="res://Themes/Carogna.ttf" id="2_m7qve"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnjm8"]
-bg_color = Color(0.0392157, 0.156863, 0.270588, 1)
+[ext_resource type="Script" path="res://addons/TablePager/Components/CellHeader.gd" id="1_ylotp"]
 
 [node name="CellHeader" type="PanelContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -20,9 +16,6 @@ script = ExtResource("1_ylotp")
 [node name="Button" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_m7qve")
-theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_pnjm8")
 text_overrun_behavior = 1
 
 [connection signal="button_down" from="Button" to="." method="_on_button_down"]

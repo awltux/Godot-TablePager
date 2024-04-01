@@ -1,25 +1,28 @@
 [gd_scene load_steps=2 format=3 uid="uid://dprhmrchr65bl"]
 
-[ext_resource type="Script" path="res://Components/TablePager/Components/CellCheckButtonUpdate.gd" id="1_jhgma"]
+[ext_resource type="Script" path="res://addons/TablePager/Components/CellCheckButtonUpdate.gd" id="1_jhgma"]
 
 [node name="CellCheckButtonUpdate" type="PanelContainer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -12.0
-offset_right = 22.0
-offset_bottom = 12.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_jhgma")
 
-[node name="CheckButton" type="CheckButton" parent="."]
-unique_name_in_owner = true
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 2
 
-[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
+[node name="CheckButton" type="CheckButton" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[connection signal="toggled" from="Panel/CheckButton" to="." method="_on_check_button_toggled"]

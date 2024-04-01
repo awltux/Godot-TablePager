@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqw776t7465xv"]
+[gd_scene load_steps=4 format=3 uid="uid://bqw776t7465xv"]
 
-[ext_resource type="Script" path="res://Components/TablePager/Examples/TablePagerExample.gd" id="1_qp5sq"]
-[ext_resource type="PackedScene" uid="uid://brcgdlt72ia6w" path="res://Components/TablePager/TablePager.tscn" id="2_0n32f"]
+[ext_resource type="Theme" uid="uid://sjxqydhvh8gr" path="res://addons/TablePager/Examples/Themes/TablePagerTheme.tres" id="1_prox4"]
+[ext_resource type="Script" path="res://addons/TablePager/Examples/TablePagerExample.gd" id="1_qp5sq"]
+[ext_resource type="PackedScene" uid="uid://brcgdlt72ia6w" path="res://addons/TablePager/TablePager.tscn" id="2_0n32f"]
 
 [node name="TablePagerExample" type="Control"]
 layout_mode = 3
@@ -12,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("1_prox4")
 script = ExtResource("1_qp5sq")
 
 [node name="TablePager" parent="." instance=ExtResource("2_0n32f")]

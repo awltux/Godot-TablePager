@@ -1,5 +1,5 @@
-class_name CellBase
 extends PanelContainer
+class_name CellBase
 
 const DEFAULT_WIDTH_PX: int = -1
 const DEFAULT_FIXED_WIDTH: bool = false
