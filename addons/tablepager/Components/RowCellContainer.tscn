@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bw4s341rvn6eg"]
 
-[ext_resource type="Script" path="res://addons/TablePager/Components/RowCellContainer.gd" id="1_2t0k0"]
+[ext_resource type="Script" path="res://addons/tablepager/Components/RowCellContainer.gd" id="1_2t0k0"]
 
 [node name="RowCellContainer" type="HBoxContainer"]
 anchors_preset = 15

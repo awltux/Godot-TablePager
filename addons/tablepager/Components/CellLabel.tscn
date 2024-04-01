@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://blsfdxgrvy5c6"]
 
-[ext_resource type="Script" path="res://addons/TablePager/Components/CellLabel.gd" id="2_vip6k"]
+[ext_resource type="Script" path="res://addons/tablepager/Components/CellLabel.gd" id="2_vip6k"]
 
 [node name="CellLabel" type="PanelContainer"]
 anchors_preset = 15

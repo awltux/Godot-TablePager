@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="TablePager"
-run/main_scene="res://Examples/TablePagerExample.tscn"
+run/main_scene="res://addons/tablepager/Examples/TablePagerExample.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://addons/tablepager/Icons/TablePager.svg"
 

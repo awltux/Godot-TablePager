@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://djemh4h5412qu"]
 
-[ext_resource type="Script" path="res://addons/TablePager/Components/CellBase.gd" id="1_qbtbw"]
-[ext_resource type="Script" path="res://addons/TablePager/Components/CellBase.gd" id="1_qbtbw"]
+[ext_resource type="Script" path="res://addons/tablepager/Components/CellBase.gd" id="1_qbtbw"]
 
 [node name="CellBase" type="PanelContainer"]
 anchors_preset = 15

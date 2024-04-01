@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c54mqbblswwks"]
 
-[ext_resource type="Script" path="res://addons/TablePager/Components/CellHeader.gd" id="1_ylotp"]
+[ext_resource type="Script" path="res://addons/tablepager/Components/CellHeader.gd" id="1_ylotp"]
 
 [node name="CellHeader" type="PanelContainer"]
 custom_minimum_size = Vector2(0, 40)
