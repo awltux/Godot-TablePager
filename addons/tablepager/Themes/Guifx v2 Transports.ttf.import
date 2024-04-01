@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://b0wrgpx8k4yc3"
-path="res://.godot/imported/Guifx v2 Transports.ttf-ac33146e56b6f493005274b1287019e6.fontdata"
+path="res://.godot/imported/Guifx v2 Transports.ttf-3e3374cba35cbcab7c0f9d14b0c9f250.fontdata"
 
 [deps]
 
-source_file="res://addons/TablePager/Themes/Guifx v2 Transports.ttf"
-dest_files=["res://.godot/imported/Guifx v2 Transports.ttf-ac33146e56b6f493005274b1287019e6.fontdata"]
+source_file="res://addons/tablepager/Themes/Guifx v2 Transports.ttf"
+dest_files=["res://.godot/imported/Guifx v2 Transports.ttf-3e3374cba35cbcab7c0f9d14b0c9f250.fontdata"]
 
 [params]
 

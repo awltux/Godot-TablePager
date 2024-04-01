@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://brcgdlt72ia6w"]
 
 [ext_resource type="Script" path="res://addons/TablePager/TablePager.gd" id="2_6ob1t"]
-[ext_resource type="Theme" uid="uid://dp1xkbl270fsv" path="res://addons/TablePager/Themes/transport.tres" id="2_bs2e7"]
+[ext_resource type="Theme" uid="uid://dp1xkbl270fsv" path="res://addons/tablepager/Themes/transport.tres" id="2_bs2e7"]
 
 [node name="TablePager" type="VBoxContainer"]
 anchors_preset = 15

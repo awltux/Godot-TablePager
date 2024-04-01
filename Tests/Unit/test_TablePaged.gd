@@ -3,7 +3,7 @@ extends GutTest
 signal columnWidthChangedSignal(newWidth: float)
 
 var danceClassTitle = "test"
-const TABLE_PAGED = preload("res://addons/TablePager/Components/TablePager/TablePager.tscn")
+const TABLE_PAGED = preload("res://addons/tablepager/TablePager.tscn")
 const HEADER_COUNT: int = 1
 const HEADER_INDEX: int = 0
 

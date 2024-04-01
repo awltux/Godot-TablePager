@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://ium5o2m0xwdc"
-path="res://.godot/imported/Carogna.ttf-06079d8007414da37797be63b3f3ff81.fontdata"
+path="res://.godot/imported/Carogna.ttf-edd79b948cab09332b90fb2b4799e43a.fontdata"
 
 [deps]
 
-source_file="res://Examples/Themes/Carogna.ttf"
-dest_files=["res://.godot/imported/Carogna.ttf-06079d8007414da37797be63b3f3ff81.fontdata"]
+source_file="res://addons/Examples/Themes/Carogna.ttf"
+dest_files=["res://.godot/imported/Carogna.ttf-edd79b948cab09332b90fb2b4799e43a.fontdata"]
 
 [params]
 
