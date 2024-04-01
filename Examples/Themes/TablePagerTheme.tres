@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=12 format=3 uid="uid://sjxqydhvh8gr"]
 
-[ext_resource type="FontFile" uid="uid://ium5o2m0xwdc" path="res://addons/TablePager/Examples/Themes/Carogna.ttf" id="1_evr4u"]
+[ext_resource type="FontFile" uid="uid://ium5o2m0xwdc" path="res://Examples/Themes/Carogna.ttf" id="1_evr4u"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krwtx"]
 content_margin_left = 4.0
