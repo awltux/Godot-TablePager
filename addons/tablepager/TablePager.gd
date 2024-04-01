@@ -1,5 +1,8 @@
+@icon("res://addons/tablepager/Icons/TablePager.svg")
+
 extends VBoxContainer
 class_name TablePager
+
 
 # YouTube Design Reference: https://www.youtube.com/watch?v=Kz517iDaUtU
 
