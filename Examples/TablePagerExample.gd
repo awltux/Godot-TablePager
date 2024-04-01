@@ -80,7 +80,7 @@ func _handle_CellSelectedSignal(columnName: String, rowIndex: Variant):
 	# fake a DB update
 	match columnName:
 		"label_string":
-			print("launching: %s[%s]" % [columnName, rowIndex])
+			print("selected row %d from column '%s'" % [rowIndex, columnName])
 
 func _handle_CellUpdatedSignal(columnName: String, rowIndex: Variant, cellValue: Variant):
 	# fake a DB update
