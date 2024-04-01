@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bqw776t7465xv"]
 
-[ext_resource type="Theme" uid="uid://sjxqydhvh8gr" path="res://addons/Examples/Themes/TablePagerTheme.tres" id="1_prox4"]
-[ext_resource type="Script" path="res://addons/Examples/TablePagerExample.gd" id="1_qp5sq"]
+[ext_resource type="Theme" uid="uid://sjxqydhvh8gr" path="res://addons/tablepager/Examples/Themes/TablePagerTheme.tres" id="1_prox4"]
+[ext_resource type="Script" path="res://addons/tablepager/Examples/TablePagerExample.gd" id="1_qp5sq"]
 [ext_resource type="PackedScene" uid="uid://brcgdlt72ia6w" path="res://addons/tablepager/TablePager.tscn" id="2_0n32f"]
 
 [node name="TablePagerExample" type="Control"]
