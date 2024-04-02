@@ -39,15 +39,22 @@ Define two methods, one to return a pageSize of Array[Dictionary] data, the seco
 The names of the methods are not relevant, but they must conform to the method parameters.
 
 ```
-# pageSize: How many rows to be returned
-# pageIndex: Which page of data to return; between 0 and ceil(dataSize/float(pageSize))
-# sortKey: The column that the data should be sorted by; must match a key in the data set.
-# sortOrder: Must be one of three values defined by the enum DataPager.EnumSortOrder
-#    * NONE: Use database natural order
-#    * ASCENDING: incrementing column values
-#    * DESCENDING: decrementing column values
-func SelectPageOfRowData(pageSize: int, pageIndex: int, sortKey: String = "", sortOrder: DataPager.EnumSortOrder = DataPager.EnumSortOrder.NONE ) -> Array[Dictionary]:
-	# Populate with a DB query and return the result
+### pageSize: How many rows to be returned
+### pageIndex: Which page of data to return; between 0 and ceil(dataSize/float(pageSize))
+### sortKey: The column that the data should be sorted by; must match a key in the data set.
+### sortOrder: Must be one of three values defined by the enum DataPager.EnumSortOrder
+###    * NONE: Use database natural order
+###    * ASCENDING: incrementing column values
+###    * DESCENDING: decrementing column values
+func SelectPageOfRowData(
+		pageSize: int,
+		pageIndex: int,
+		sortKey: String = "",
+		sortOrder: DataPager.EnumSortOrder = DataPager.EnumSortOrder.NONE
+		) -> Array[Dictionary]:
+	### Populate with a DB query and return the result
+	### Don't forget that you can put additional filtering here like selecting
+	### specific players or levels to make the table context specific. 
 	return []
 
 # Return the total size of the data being queried.
@@ -63,7 +70,7 @@ var tableConfig: TableConfig
 var pageSize: int = 10
 
 func _ready():
-	# Configure the callbacks used to get data pages and the desired size of each page.
+	### Configure the callbacks used to get data pages and the desired size of each page.
 	tableConfig = TableConfig.new(
 			SelectPageOfRowData, 
 			GetDataCount, 
@@ -86,39 +93,40 @@ Current types of cells include:
 **NOTE**: Please feel free to submit any additional Cells you create and I'll try to include them in future releases.
 
 ```
-# Parameters are as follows:
-	# The header cell is placed at the top of the table
-	# The column cell is a specialised scene object that displays each column/row data
-	# The column name used to read the value from the row data and then populate the cell component
-	# The primary key for a row of data is used when creating signals such as Clicked or Changed and allows the developer to map the event back to the database row.
+	### Parameters are as follows:
+	### The header cell is placed at the top of the table
+	### The column cell is a specialised scene object that displays each column/row data
+	### The column name used to read the value from the row data and then populate the cell component
+	### The primary key for a row of data is used when creating signals such as
+	### Clicked or Changed and allows the developer to map the event back to the database row.
 	var labelColumnConfig:ColumnConfig = ColumnConfig.new(
 			# Set the Header widget
 			TablePager.CellHeaderResource, 
 			TablePager.CellLabelResource, 
 			"label_string", 
 			"label_primary_key")
-	# Additional, cell-specific parameters are passed as a dictionary of items
-	# See Examples and Cell component scripts for full list of configuration parameters
+	### Additional, cell-specific parameters are passed as a dictionary of items
+	### See Examples and Cell component scripts for full list of configuration parameters
 
-	# This adds a Signal object to send 'selected' events to the application.
+	### This adds a Signal object to send 'selected' events to the application.
 	labelColumnConfig.AddCellConfig(ColumnConfig.CELL_SELECTED_SIGNAL, CellSelectedSignal)
 
-	# Add the ColumnConfig to the TableConfig
+	### Add the ColumnConfig to the TableConfig
 	tableConfig.AddColumnConfig(labelColumnConfig)
 
-	# Define more columns as required...
+	### Define more columns as required...
 ```
 
 ## DataPager
 The TableConfig is passed to a DataPager that selects the data and passes it to the TablePager for display.
 ```
-	# Create a DataPager using the TableConfig
+	### Create a DataPager using the TableConfig
 	var dataPager: DataPager = DataPager.new( tableConfig )
 	
-	# Tell the TablePager Node where to get its data pages from   
+	### Tell the TablePager Node where to get its data pages from   
 	tablePager.Initialise(dataPager)
 
-	# Display the current page of sorted data.   
+	### Display the current page of sorted data.   
 	tablePager.Render()
 ```
 
