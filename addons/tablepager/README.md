@@ -112,6 +112,7 @@ Current types of cells include:
 	labelColumnConfig.AddCellConfig(ColumnConfig.CELL_SELECTED_SIGNAL, CellSelectedSignal)
 
 	### Add the ColumnConfig to the TableConfig
+	### NOTE: Columns are displayed in the order they are added to the TableConfig
 	tableConfig.AddColumnConfig(labelColumnConfig)
 
 	### Define more columns as required...
