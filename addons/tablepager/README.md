@@ -1,5 +1,6 @@
 # Table Pager
-Table pager is a Godot 4.x plugin that displays Array[Dictionary] data in a table format.
+Table pager is a Godot 4.x plugin that displays Array[Dictionary] data 
+as an in-game pageable and sortable table.
 
 [GitHub repository](https://github.com/awltux/Godot-TablePager)
 # Features
@@ -33,7 +34,8 @@ Either:
 # Usage
 Add an instance of the TablePager scene into the Node tree.
 
-In the parent Node script:
+Use the parent Node script to initialise the TablePager Node
+
 ## Callback methods
 Define two methods, one to return a pageSize of Array[Dictionary] data, the second to return the dataSize.
 The names of the methods are not relevant, but they must conform to the method parameters.
