@@ -23,8 +23,6 @@ as an in-game pageable and sortable table.
 * Uses Signals to return data to the application.
 * Example code
   * Example includes basic theme
-* Unit Tests
-  * Install GUT to run a set of basic tests
 
 # Installation
 Either:
