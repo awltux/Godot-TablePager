@@ -1,17 +1,22 @@
-# Table Pager
-The development project for Godot-TablePager, a Godot 4.x plugin that displays Array[Dictionary] data in a table format.
-You only need to run this project when developing or testing the plugin.
-For information on using the plugin, see addons/tablepager/README.md
+# TablePager
+Godot-TablePager is a Godot 4.x game-engine plugin that displays Array[Dictionary] data as an in-game pageable and sortable table.
+
+The project in this directory is used to develop, test and release the plugin.
+
+**NOTE**: See [plugin README.md](addons/tablepager/README.md) for details on how to use the plugin in a game.
 
 [GitHub repository](https://github.com/awltux/Godot-TablePager)
 
 # Running
 Open this project in Godot 4.x.
-The default scene for the project is configured as addons/tablepager/Examples/TablePagerExample.tscn
+
+The default scene for the project is configured with addons/tablepager/Examples/TablePagerExample.tscn
+
 Running the project will show a demo of the TablePager using test data.
 
 # Testing
 Install the GUT plugin.
+
 Run the test in Tests/unit
 
-It's not very comprehensive, primarily covering the paging features
+It's not very comprehensive, primarily covering the paging feature
