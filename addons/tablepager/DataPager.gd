@@ -10,12 +10,6 @@ See DataPagerSQLite derived class for DB implementation
 const COLUMN_KEY_TYPE = "key_type"
 const COLUMN_UPDATE_CALLABLE = "update_callable"
 
-const ENUM_SORT_ORDER_COUNT = 3
-enum EnumSortOrder {
-	NONE = 0,
-	ASCENDING = 1,
-	DESCENDING = 2,
-}
 
 # A function on sd3d_db ORM that supports specific paging parameters
 # Callable.call(_pageIndex, pagesize[, sortColumn]?) 
@@ -30,7 +24,8 @@ var _pageSize: int
 var _pageMax: int
 var _pageIndexCurrent: int = 0
 var _sortColumnKey: String = ""
-var _sortColumnOrder: EnumSortOrder = EnumSortOrder.NONE
+var _sortColumnOrder: TablePager.EnumSortOrder = TablePager.EnumSortOrder.NONE
+var _searchText: String = ""
 
 
 
@@ -41,8 +36,8 @@ func _init(tableConfig: TableConfig):
 	_dataCountCallable = tableConfig.dataCountCallable
 	_pageSize = tableConfig.pageSize
 	_skipSize = tableConfig.skipSize
-	var dataSize = _dataCountCallable.call()
-	_pageMax = ceil(dataSize/float(_pageSize))
+	var dataCount = _dataCountCallable.call()
+	resetDataCount(dataCount)
 	_columnKeys = _tableConfig.GetKeys()
 	_sortColumnKey = _tableConfig.GetSortColumn()
 
@@ -115,13 +110,20 @@ func GetPageDataPrevious() -> Array[Dictionary]:
 		dataResultSet = _dataSelectCallable.call(_pageSize, _pageIndexCurrent, _sortColumnKey)
 	return dataResultSet
 
+func SetSearchText(searchText: String):
+	_searchText = searchText
+	
+func resetDataCount(dataCount: int):
+	_pageMax = ceil(dataCount/float(_pageSize))
+	_pageIndexCurrent = 0
+
 func SetSortColumn(columnKey: String) -> String:
 	assert(columnKey in _columnKeys, "Unknown columnKey: %s" % columnKey)
 	if _sortColumnKey != columnKey:
 		_sortColumnKey = columnKey
 	return _sortColumnKey
 
-func GetPageDataSorted(columnKey: String, sortOrder: EnumSortOrder) -> Array[Dictionary]:
+func GetPageDataSorted(columnKey: String, sortOrder: TablePager.EnumSortOrder) -> Array[Dictionary]:
 	assert(columnKey in _columnKeys, "Unknown columnKey: %s" % columnKey)
 	_sortColumnKey = columnKey
 	_sortColumnOrder = sortOrder

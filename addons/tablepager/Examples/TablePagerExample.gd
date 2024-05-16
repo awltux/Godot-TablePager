@@ -6,7 +6,8 @@ extends Control
 # A real applicaiton would be using SQLite DB 
 var dataArray: Array[Dictionary] = []
 var lastSortKey
-var lastSortOrder: DataPager.EnumSortOrder
+var lastSortOrder: TablePager.EnumSortOrder
+var lastSearchText: String = ""
 
 var pageSize = 15
 var dataSize = 155
@@ -24,7 +25,8 @@ func _ready():
 	# Tell the table how to get data and what size each page should be.
 	tableConfig = TableConfig.new(
 			SelectPageOfRowData, 
-			GetDataCount, 
+			GetDataCount,
+			RowColourCallback,
 			pageSize)
 	
 	#######################################
@@ -62,10 +64,9 @@ func _ready():
 
 	createSomeFakeData(tableConfig, dataSize)
 
-	var dataPager: DataPager = DataPager.new( tableConfig )
 	
 	# Initialise the @onready variables 
-	tablePager.Initialise(dataPager)
+	tablePager.Initialise(tableConfig)
 	tablePager.Render()
 
 func _enter_tree():
@@ -75,13 +76,15 @@ func _enter_tree():
 func _exit_tree():
 	CellUpdatedSignal.disconnect(_handle_CellUpdatedSignal)
 	CellSelectedSignal.disconnect(_handle_CellSelectedSignal)
-	
+
+# TablePager configured to call this function when table cell selected
 func _handle_CellSelectedSignal(columnName: String, rowIndex: Variant):
 	# fake a DB update
 	match columnName:
 		"label_string":
 			print("selected row %d from column '%s'" % [rowIndex, columnName])
 
+# TablePager configured to call this function when table cell updated
 func _handle_CellUpdatedSignal(columnName: String, rowIndex: Variant, cellValue: Variant):
 	# fake a DB update
 
@@ -96,14 +99,36 @@ func _handle_CellUpdatedSignal(columnName: String, rowIndex: Variant, cellValue:
 				"slider_value":
 					dataRow[columnName] = int(cellValue)
 	pass
+
+func RowColourCallback(rowUuid: String, rowValue: String) -> Color:
+	return Color.CHARTREUSE
+
+# TablePager is configured to call this when it needs the a page of data
+# A real application would use this to return a page of data from the database
+func SelectPageOfRowData(pageSize: int, pageIndex: int, sortKey: String = "", sortOrder: TablePager.EnumSortOrder = TablePager.EnumSortOrder.NONE, searchString: String = "" ) -> Array[Dictionary]:
+	var filteredData: Array[Dictionary] = []
+		
+	# Apply Search to static data array
+	var currentSearchString: String = tablePager.GetSearchText()
+	if currentSearchString.is_empty():
+		filteredData = dataArray
+	else:
+		for dataRow: Dictionary in dataArray:
+			var columnString: String = dataRow["label_string"].to_lower()
+			if columnString.contains(currentSearchString.to_lower()):
+				filteredData.append(dataRow)
 	
-func SelectPageOfRowData(pageSize: int, pageIndex: int, sortKey: String = "", sortOrder: DataPager.EnumSortOrder = DataPager.EnumSortOrder.NONE ) -> Array[Dictionary]:
+	if lastSearchText.to_lower() != currentSearchString.to_lower():
+		lastSearchText = currentSearchString
+		# Need to tell the DataPager that the data length has changed.
+		tablePager.ResetDataCount(filteredData.size())
+	
 	# Fake a database lookup
 	var columnKeyArray: Array = tableConfig.GetKeys()
 	
 	var sortParamsChanged = ( lastSortKey != sortKey || lastSortOrder != sortOrder )
 	if sortKey in columnKeyArray && sortParamsChanged:
-		dataArray.sort_custom( 
+		filteredData.sort_custom( 
 			# Use a Lambda so 'ascending' and 'sortKey' variables can be passed in
 			func(a,b) -> bool: 
 				var aValue = a[sortKey]
@@ -121,11 +146,11 @@ func SelectPageOfRowData(pageSize: int, pageIndex: int, sortKey: String = "", so
 		
 	var startIndex = pageIndex * pageSize
 	var endIndex = startIndex + pageSize
-	return dataArray.slice(startIndex, endIndex, 1, true)
+	return filteredData.slice(startIndex, endIndex, 1, true)
 
+# TablePager is configured to call this during initialisation to find the unfiltered length of the data
 func GetDataCount() -> int:
 	return dataArray.size()
-	
 	
 #######################################################################
 ## CREATE FAKE DATA ARRAY

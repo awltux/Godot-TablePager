@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://brcgdlt72ia6w"]
+[gd_scene load_steps=4 format=3 uid="uid://brcgdlt72ia6w"]
 
 [ext_resource type="Script" path="res://addons/tablepager/TablePager.gd" id="2_6ob1t"]
 [ext_resource type="Theme" uid="uid://dp1xkbl270fsv" path="res://addons/tablepager/Themes/transport.tres" id="2_bs2e7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vssmn"]
+bg_color = Color(0.301961, 0.301961, 0.301961, 1)
 
 [node name="TablePager" type="VBoxContainer"]
 anchors_preset = 15
@@ -16,20 +19,48 @@ script = ExtResource("2_6ob1t")
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Padding" type="PanelContainer" parent="NavigationPane"]
+[node name="SearchBoxContainer" type="HBoxContainer" parent="NavigationPane"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="SpyGlass" type="Button" parent="NavigationPane/SearchBoxContainer"]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+theme = ExtResource("2_bs2e7")
+disabled = true
+text = ")"
+flat = true
+
+[node name="SearchTextEntry" type="LineEdit" parent="NavigationPane/SearchBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search..."
+
+[node name="ResetButton" type="Button" parent="NavigationPane/SearchBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+theme = ExtResource("2_bs2e7")
+text = "x"
+
+[node name="Padding" type="PanelContainer" parent="NavigationPane"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vssmn")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NavigationPane"]
 layout_mode = 2
 theme = ExtResource("2_bs2e7")
 
 [node name="ButtonSkipBack" type="Button" parent="NavigationPane/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "5"
 
 [node name="ButtonPrevious" type="Button" parent="NavigationPane/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "a"
@@ -38,13 +69,17 @@ text = "a"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+size_flags_vertical = 1
+horizontal_alignment = 1
 
 [node name="ButtonNext" type="Button" parent="NavigationPane/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "d"
 
 [node name="ButtonSkipForwards" type="Button" parent="NavigationPane/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "6"
@@ -64,6 +99,8 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[connection signal="text_changed" from="NavigationPane/SearchBoxContainer/SearchTextEntry" to="." method="_on_search_text_entry_text_changed"]
+[connection signal="pressed" from="NavigationPane/SearchBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="NavigationPane/HBoxContainer/ButtonSkipBack" to="." method="_on_button_skip_back_pressed"]
 [connection signal="pressed" from="NavigationPane/HBoxContainer/ButtonPrevious" to="." method="_on_button_previous_pressed"]
 [connection signal="pressed" from="NavigationPane/HBoxContainer/ButtonNext" to="." method="_on_button_next_pressed"]

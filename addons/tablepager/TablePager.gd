@@ -15,31 +15,57 @@ const CellHeaderResource: PackedScene = preload("./Components/CellHeader.tscn")
 const CellSliderUpdateResource: PackedScene = preload("./Components/CellSliderUpdate.tscn")
 const CellCheckButtonUpdateResource: PackedScene = preload("./Components/CellCheckButtonUpdate.tscn")
 
+const ENUM_SORT_ORDER_COUNT = 3
+
+enum EnumSortOrder {
+	NONE = 0,
+	ASCENDING = 1,
+	DESCENDING = 2,
+}
 
 @onready var headerContainer = %HeaderContainer
 @onready var rowContainer = %RowContainer
 @onready var page_progress_label = %PageProgressLabel
+@onready var search_text_entry = %SearchTextEntry
 
-	
+# Navigation Buttons
+@onready var button_skip_back     = %ButtonSkipBack
+@onready var button_previous      = %ButtonPrevious
+@onready var button_next          = %ButtonNext
+@onready var button_skip_forwards = %ButtonSkipForwards
+
+
 var _dataPager: DataPager
 
-func Initialise(dataPager: DataPager):
-	_dataPager = dataPager
+func Initialise(tableConfig: TableConfig):
+	_dataPager = DataPager.new( tableConfig )
+
 	if is_inside_tree():
 
 		var sortColumnSignal: Signal = _dataPager._tableConfig.columnSortSignal
-		sortColumnSignal.connect(_handleColumnSortSignal)
+		if not sortColumnSignal.is_connected(_handleColumnSortSignal):
+			sortColumnSignal.connect(_handleColumnSortSignal)
 
 		var widthChangedSignal: Signal = _dataPager._tableConfig.widthChangedSignal
-		widthChangedSignal.connect(_handleWidthChangedSignal)
+		if not widthChangedSignal.is_connected(_handleWidthChangedSignal):
+			widthChangedSignal.connect(_handleWidthChangedSignal)
  
 func _exit_tree():
 
-	var sortColumnSignal: Signal = _dataPager._tableConfig.columnSortSignal
-	sortColumnSignal.disconnect(_handleColumnSortSignal)
+	if _dataPager:
+		var sortColumnSignal: Signal = _dataPager._tableConfig.columnSortSignal
+		if sortColumnSignal:
+			sortColumnSignal.disconnect(_handleColumnSortSignal)
 
-	var widthChangedSignal: Signal = _dataPager._tableConfig.widthChangedSignal
-	widthChangedSignal.disconnect(_handleWidthChangedSignal)
+		var widthChangedSignal: Signal = _dataPager._tableConfig.widthChangedSignal
+		if widthChangedSignal:
+			widthChangedSignal.disconnect(_handleWidthChangedSignal)
+
+func GetSearchText() -> String:
+	return _dataPager._searchText
+
+func ResetDataCount(dataCount: int):
+	_dataPager.resetDataCount(dataCount)
 
 func _handleWidthChangedSignal(columnName: String, columnWidth: float):
 	var columnConfig: ColumnConfig = _dataPager._tableConfig.GetColumnConfig(columnName)
@@ -49,12 +75,11 @@ func _handleWidthChangedSignal(columnName: String, columnWidth: float):
 func _handleColumnSortSignal(columnName: String):
 	assert(columnName in _dataPager.GetColumnKeys(), "Invalid Sort columnName: %s" % [columnName])
 	_dataPager._sortColumnKey = columnName
-	_dataPager._sortColumnOrder = (_dataPager._sortColumnOrder + 1) % DataPager.ENUM_SORT_ORDER_COUNT
+	_dataPager._sortColumnOrder = (_dataPager._sortColumnOrder + 1) % ENUM_SORT_ORDER_COUNT
 	Render()
 
 
 func Render():
-	SetPageProgressLabel()
 	# Remove all rows - not header
 	var rowArray: Array = rowContainer.get_children()
 	var rowCount: int = rowArray.size()
@@ -84,6 +109,8 @@ func Render():
 		# Add each row to the table
 		for rowData: Dictionary in currentPageData:
 			var rowCellContainer: RowCellContainer = RowCellContainerResource.instantiate()
+			# rowCellContainer.add_theme_color_override("bg_color", Color.CRIMSON)
+
 			rowContainer.add_child(rowCellContainer)
 			
 			# Add each column to the current row
@@ -109,6 +136,8 @@ func Render():
 
 				rowCellContainer.add_child(cellInstance)
 
+		SetPageProgressLabel()
+
 
 func _on_button_skip_back_pressed():
 	_dataPager.SetSkipPreviousPageIndex()
@@ -130,4 +159,32 @@ func _on_button_skip_forwards_pressed():
 	Render()
 	
 func SetPageProgressLabel():
-	page_progress_label.text = "page %d of %d" % [_dataPager._pageIndexCurrent + 1, _dataPager._pageMax]
+	if _dataPager._pageMax == 0:
+		page_progress_label.text = "Page 0 of 0"
+	else:
+		page_progress_label.text = "Page %d of %d" % [_dataPager._pageIndexCurrent + 1, _dataPager._pageMax]
+
+	if _dataPager._pageMax == 0 || (_dataPager._pageMax == 1 && _dataPager._pageIndexCurrent == 0):
+		button_skip_back.disabled = true
+		button_previous.disabled = true
+		button_next.disabled = true
+		button_skip_forwards.disabled = true
+	else:
+		button_skip_back.disabled = false
+		button_previous.disabled = false
+		button_next.disabled = false
+		button_skip_forwards.disabled = false
+		
+
+func _on_search_text_entry_text_changed(searchText):
+	var currentSearchText: String = _dataPager._searchText
+	if currentSearchText != searchText:
+		_dataPager.SetSearchText(searchText)
+		Render()
+
+func _on_reset_button_pressed():
+	search_text_entry.text = ""
+	_dataPager.SetSearchText("")
+	Render()
+
+

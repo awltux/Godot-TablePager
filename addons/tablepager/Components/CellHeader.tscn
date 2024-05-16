@@ -16,6 +16,8 @@ script = ExtResource("1_ylotp")
 [node name="Button" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/outline_size = 2
+alignment = 0
 text_overrun_behavior = 1
 
 [connection signal="button_down" from="Button" to="." method="_on_button_down"]

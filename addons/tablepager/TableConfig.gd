@@ -7,6 +7,7 @@ const DEFAULT_PAGE_SIZE = 10
 # Add a ColumnConfig for each column in the table. 
 var dataSelectCallable: Callable
 var dataCountCallable: Callable
+var rowColourCallable: Callable
 var pageSize: int
 var skipSize: int
 var _columnConfigs: Dictionary = {}
@@ -17,17 +18,23 @@ var columnSortSignal: Signal
 
 
 signal DEFAULT_WIDTH_CHANGED_SIGNAL(newWidth: float)
-signal DEFAULT_SORT_SIGNAL(columnName: String, sortOrder: int)
+signal DEFAULT_SORT_SIGNAL(columnName: String)
+
+# Default ROW colour is SLATE_GREY
+func DefaultRowColourCallable(rowUuid: String, rowValue) -> Color:
+	return Color.SLATE_GRAY
 
 func _init(
 			_dataSelectCallable: Callable, 
-			_dataCountCallable: Callable, 
+			_dataCountCallable: Callable,
+			_rowColourCallable: Callable = DefaultRowColourCallable,
 			_pageSize: int = DEFAULT_PAGE_SIZE, 
 			_skipSize: int = DEFAULT_SKIP_SIZE, 
 			_widthChangedSignal: Signal = DEFAULT_WIDTH_CHANGED_SIGNAL, 
 			_columnSortSignal: Signal = DEFAULT_SORT_SIGNAL):
 	dataSelectCallable = _dataSelectCallable
 	dataCountCallable = _dataCountCallable
+	rowColourCallable = _rowColourCallable
 	pageSize = _pageSize
 	skipSize = _skipSize
 	widthChangedSignal = _widthChangedSignal
