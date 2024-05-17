@@ -36,14 +36,17 @@ func _init(tableConfig: TableConfig):
 	_dataCountCallable = tableConfig.dataCountCallable
 	_pageSize = tableConfig.pageSize
 	_skipSize = tableConfig.skipSize
-	var dataCount = _dataCountCallable.call()
-	resetDataCount(dataCount)
 	_columnKeys = _tableConfig.GetKeys()
 	_sortColumnKey = _tableConfig.GetSortColumn()
+	GetDataCount(_searchText)
 
 func GetColumnConfig(columnKey) -> ColumnConfig:
 	return _tableConfig.GetColumnConfig(columnKey)
 	
+func GetDataCount(searchText: String = "") -> int:
+	var dataCount: int = _dataCountCallable.call(_searchText)
+	resetDataCount(dataCount)
+	return dataCount
 
 func GetColumnType(columnKey: String) -> PackedScene:
 	var columnConfig: ColumnConfig = _tableConfig.GetColumnConfig(columnKey)
@@ -56,8 +59,9 @@ func GetRowIndex(columnKey: String) -> PackedScene:
 func GetColumnKeys() -> Array:
 	return _columnKeys
 
-func GetPageDataCurrent() -> Array[Dictionary]:
-	return _dataSelectCallable.call(_pageSize, _pageIndexCurrent, _sortColumnKey, _sortColumnOrder)
+func GetPageDataCurrent() -> Array:
+	GetDataCount(_searchText)
+	return _dataSelectCallable.call(_pageSize, _pageIndexCurrent, _sortColumnKey, _sortColumnOrder, _searchText)
 
 func GetPageData(pageNumber: int = 0) -> Array[Dictionary]:
 	return _dataSelectCallable.call(pageNumber, _pageSize, _sortColumnKey)
@@ -114,8 +118,10 @@ func SetSearchText(searchText: String):
 	_searchText = searchText
 	
 func resetDataCount(dataCount: int):
+	var currentPageMax = _pageMax
 	_pageMax = ceil(dataCount/float(_pageSize))
-	_pageIndexCurrent = 0
+	if currentPageMax != _pageMax:
+		_pageIndexCurrent = 0
 
 func SetSortColumn(columnKey: String) -> String:
 	assert(columnKey in _columnKeys, "Unknown columnKey: %s" % columnKey)

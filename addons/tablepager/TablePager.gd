@@ -38,6 +38,7 @@ enum EnumSortOrder {
 var _dataPager: DataPager
 
 func Initialise(tableConfig: TableConfig):
+	search_text_entry.text = ""
 	_dataPager = DataPager.new( tableConfig )
 
 	if is_inside_tree():
@@ -61,8 +62,20 @@ func _exit_tree():
 		if widthChangedSignal:
 			widthChangedSignal.disconnect(_handleWidthChangedSignal)
 
+func SetSortOrder(sortColumnOrder: TablePager.EnumSortOrder = TablePager.EnumSortOrder.DESCENDING) -> void:
+	_dataPager._sortColumnOrder = sortColumnOrder
+
+func SortByColumn(columnName: String):
+	assert(columnName in _dataPager.GetColumnKeys(), "Invalid Sort columnName: %s" % [columnName])
+	_dataPager._sortColumnKey = columnName
+	_dataPager._sortColumnOrder =  (_dataPager._sortColumnOrder + 1) % TablePager.ENUM_SORT_ORDER_COUNT
+	Render()
+	
 func GetSearchText() -> String:
-	return _dataPager._searchText
+	var searchText = ""
+	if _dataPager:
+		searchText = _dataPager._searchText
+	return searchText
 
 func ResetDataCount(dataCount: int):
 	_dataPager.resetDataCount(dataCount)
@@ -73,11 +86,7 @@ func _handleWidthChangedSignal(columnName: String, columnWidth: float):
 	columnConfig.expandHorizontal = false
 	
 func _handleColumnSortSignal(columnName: String):
-	assert(columnName in _dataPager.GetColumnKeys(), "Invalid Sort columnName: %s" % [columnName])
-	_dataPager._sortColumnKey = columnName
-	_dataPager._sortColumnOrder = (_dataPager._sortColumnOrder + 1) % ENUM_SORT_ORDER_COUNT
-	Render()
-
+	SortByColumn(columnName)
 
 func Render():
 	# Remove all rows - not header
@@ -88,7 +97,7 @@ func Render():
 		rowContainer.remove_child(childNode)
 
 	if _dataPager:
-		var currentPageData: Array[Dictionary] = _dataPager.GetPageDataCurrent()
+		var currentPageData: Array = _dataPager.GetPageDataCurrent()
 		var _row_count: int = currentPageData.size()
 		var columnKeyArray: Array = _dataPager.GetColumnKeys()
 

@@ -105,23 +105,10 @@ func RowColourCallback(rowUuid: String, rowValue: String) -> Color:
 
 # TablePager is configured to call this when it needs the a page of data
 # A real application would use this to return a page of data from the database
-func SelectPageOfRowData(pageSize: int, pageIndex: int, sortKey: String = "", sortOrder: TablePager.EnumSortOrder = TablePager.EnumSortOrder.NONE, searchString: String = "" ) -> Array[Dictionary]:
-	var filteredData: Array[Dictionary] = []
+func SelectPageOfRowData(pageSize: int, pageIndex: int, sortKey: String = "", sortOrder: TablePager.EnumSortOrder = TablePager.EnumSortOrder.NONE, searchString: String = "" ) -> Array:
+	var filteredData: Array = []
 		
-	# Apply Search to static data array
-	var currentSearchString: String = tablePager.GetSearchText()
-	if currentSearchString.is_empty():
-		filteredData = dataArray
-	else:
-		for dataRow: Dictionary in dataArray:
-			var columnString: String = dataRow["label_string"].to_lower()
-			if columnString.contains(currentSearchString.to_lower()):
-				filteredData.append(dataRow)
-	
-	if lastSearchText.to_lower() != currentSearchString.to_lower():
-		lastSearchText = currentSearchString
-		# Need to tell the DataPager that the data length has changed.
-		tablePager.ResetDataCount(filteredData.size())
+	filteredData = GetSearchData(searchString)
 	
 	# Fake a database lookup
 	var columnKeyArray: Array = tableConfig.GetKeys()
@@ -149,11 +136,31 @@ func SelectPageOfRowData(pageSize: int, pageIndex: int, sortKey: String = "", so
 	return filteredData.slice(startIndex, endIndex, 1, true)
 
 # TablePager is configured to call this during initialisation to find the unfiltered length of the data
-func GetDataCount() -> int:
-	return dataArray.size()
+func GetDataCount(searchText: String = "") -> int:
+	var searchData: Array = GetSearchData(searchText)
+	return searchData.size()
 	
 #######################################################################
 ## CREATE FAKE DATA ARRAY
+
+func GetSearchData(searchString) -> Array:
+	var filteredData: Array = []
+	# Apply Search to static data array
+	var currentSearchString: String = tablePager.GetSearchText()
+	if currentSearchString.is_empty():
+		filteredData = dataArray
+	else:
+		for dataRow: Dictionary in dataArray:
+			var columnString: String = dataRow["label_string"].to_lower()
+			if columnString.contains(currentSearchString.to_lower()):
+				filteredData.append(dataRow)
+
+	if lastSearchText.to_lower() != currentSearchString.to_lower():
+		lastSearchText = currentSearchString
+		# Need to tell the DataPager that the data length has changed.
+		tablePager.ResetDataCount(filteredData.size())
+
+	return filteredData
 
 func createSomeFakeData(tableConfig:TableConfig, rowCount: int):
 	dataArray = []
