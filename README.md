@@ -1,26 +1,22 @@
-# Table Pager
-Table pager is a Godot 4.x plugin that displays Array[Dictionary] data in a table format.
+# TablePager
+Godot-TablePager is a Godot 4.x game-engine plugin that displays Array[Dictionary] data as an in-game pageable and sortable table.
+
+The project in this directory is used to develop, test and release the plugin.
+
+**NOTE**: See [plugin README.md](addons/tablepager/README.md) for details on how to use the plugin in a game.
 
 [GitHub repository](https://github.com/awltux/Godot-TablePager)
-# Features
-* Uses data in the Array[Dictionary] format, as used by the SQLite plugin 
-* Data Pager displays data a page at a time
-  * Step forward or backward a page at a time
-  * Skip forward or backward several pages at a time
-  * Displays the current page and the end page using "N of M"
-* Sortable columns
-  * Click header for Ascending, Descending and DB native
-* Resizable columns
-  * Initial width can be set
-  * Columns can be dragged to a new size.
-* Column Headers
-  * Default name is the column name used in the Dictionary
-  * Header name can be overridden.
-* Extend CellBase to create other types of table Cells
-* Update data in DB:
-  * progressBar and CheckButtons can be used to update the DB directly.
-* Uses Signals to return data to the application.
-* Example code
-  * Example includes basic theme
-* Unit Tests
-  * Install GUT to run a set of basic tests
+
+# Running
+Open this project in Godot 4.x.
+
+The default scene for the project is configured with addons/tablepager/Examples/TablePagerExample.tscn
+
+Running the project will show a demo of the TablePager using test data.
+
+# Testing
+Install the GUT plugin.
+
+Run the test in Tests/unit
+
+It's not very comprehensive, primarily covering the paging feature
